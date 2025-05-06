@@ -1,4 +1,5 @@
-# EXPERIMENT--02-INTEFACING-A-DIGITAL-INPUT-TO-ARM-DEVELOPMENT-BOARD
+# EXPERIMENT 02 : INTEFACING A DIGITAL INPUT TO ARM DEVELOPMENT BOARD
+# REG NO : 212223240007
 ## Aim: To Interface a Digital Input  (userpush button  ) to ARM   development board and write a  program to obtain  the data and flash the led  
 ## Components required: STM32 CUBE IDE, ARM IOT development board,  STM programmer tool.
 ## Theory 
@@ -51,12 +52,48 @@ The full form of an ARM is an advanced reduced instruction set computer (RISC) m
 
 
 ## STM 32 CUBE PROGRAM :
+```C
+#include "main.h"
+#include <stdbool.h>
+bool button_status;
+void led();
 
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+
+
+int main(void)
+{
+  HAL_Init();
+  SystemClock_Config();
+  MX_GPIO_Init();
+
+  while (1)
+  {
+	  led();
+  }
+  /* USER CODE END 3 */
+}
+void led(){
+	button_status=HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13);
+	if (button_status==0){
+		HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);
+	}
+	else{
+		HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);
+	}
+	HAL_Delay(500);
+}
+```
 
 
 ## Output  :
- 
-## layout of the circuit 
+### OFF Condition:
+![pmc1](https://github.com/user-attachments/assets/ac35a763-efae-47d8-bbf0-fa0244c69f14)
+### ON Condition:
+![pmc2](https://github.com/user-attachments/assets/aac9f87d-d99c-42bc-b3a2-a371d3784e0f)
+
+
  
  
 ## Result :
